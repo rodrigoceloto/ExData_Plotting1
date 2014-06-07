@@ -1,10 +1,13 @@
+## Set regional formats
 Sys.setenv(LANG = "en")
 Sys.setlocale("LC_TIME", "en_US.UTF-8")
 
+## Import data using data.table 
 library(data.table)
 table<-fread("household_power_consumption.txt",header=TRUE,sep=";",na.strings=c('?'))[(Date=="1/2/2007" | Date=="2/2/2007"),list(Date,Time,Sub_metering_1,Sub_metering_2,Sub_metering_3)]
 table<-as.data.frame(table)
 
+## Transform dataset to data.frame and set numerical collumns
 table$Datetime<-strptime(paste(table$Date, table$Time), format = "%d/%m/%Y %H:%M:%S")
 table$Sub_metering_1<-as.numeric(table$Sub_metering_1)
 table$Sub_metering_2<-as.numeric(table$Sub_metering_2)
